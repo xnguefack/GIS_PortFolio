@@ -7,7 +7,16 @@
 </head>
 <body>
     <h1>Air Quality Map</h1>
+    Add a search box and a placeholder for city suggestions
+    <div style="padding:10px;">
+        <label for="city-input">Search for a city:</label>
+        <input type="text" id="city-input" placeholder="Start typing a city..." style="width: 250px;" />
+        <ul id="suggestions" style="list-style: none; padding: 5px 0; margin: 0;"></ul>
+    </div>
+    The map container
     <div id="map"></div>
+    <p id="timestamp" style="padding: 10px; font-style: italic; color: #444;"></p>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 </body>
