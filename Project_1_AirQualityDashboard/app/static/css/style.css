@@ -8,3 +8,20 @@ body {
     height: 600px;
     width: 100%;
 }
+
+/* Aligning the charts horizontally side-by-side
+to align the three charts side-by-side horizontally, we’ll apply some simple CSS using Flexbox. */
+#charts {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#charts canvas {
+    width: 600px !important;
+    height: 300px !important;
+}
+
+

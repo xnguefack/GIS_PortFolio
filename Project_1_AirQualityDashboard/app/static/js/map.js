@@ -137,8 +137,54 @@ function loadAirQuality(lat, lon, cityName = 'Selected Location') { // Step 25.B
                 currentMarker.openPopup();
             }, 150);
 
-
             map.setView([lat, lon], map.getZoom());
+
+            // Extract hourly data and labels (limit to first 24 hours)
+            const labels = data.hourly.time.slice(0, 24).map(t => {
+                const d = new Date(t);
+                return `${d.getHours().toString().padStart(2, '0')}:00`;
+            });
+            const pm10Data = data.hourly.pm10.slice(0, 24);
+            const pm25Data = data.hourly.pm2_5.slice(0, 24);
+            const coData = data.hourly.carbon_monoxide.slice(0, 24);
+
+            // Helper to draw chart
+            function renderChart(canvasId, label, dataset, color) {
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: label,
+                            data: dataset,
+                            borderColor: color,
+                            backgroundColor: 'rgba(0,0,0,0)',
+                            tension: 0.3,
+                            pointRadius: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: true } },
+                        scales: {
+                            y: { beginAtZero: true },
+                            x: { ticks: { maxRotation: 0 } }
+                        }
+                    }
+                });
+            }
+
+            // Clear existing canvas (if already used)
+            ['chart-pm10', 'chart-pm25', 'chart-co'].forEach(id => {
+                const old = Chart.getChart(id);
+                if (old) old.destroy();
+            });
+
+            // Draw charts
+            renderChart('chart-pm10', 'PM10 (μg/m³)', pm10Data, 'orange');
+            renderChart('chart-pm25', 'PM2.5 (μg/m³)', pm25Data, 'red');
+            renderChart('chart-co', 'CO (μg/m³)', coData, 'blue');
         });
 }
 

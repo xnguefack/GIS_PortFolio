@@ -3,6 +3,8 @@
 <head>
     <title>Air Quality Dashboard</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -15,6 +17,13 @@
     </div>
     The map container
     <div id="map"></div>
+    <div id="charts" style="padding: 20px;">
+        <h3>Air Quality Trends (Next 24 Hours)</h3>
+        <canvas id="chart-pm10" height="150"></canvas>
+        <canvas id="chart-pm25" height="150"></canvas>
+        <canvas id="chart-co" height="150"></canvas>
+    </div>
+
     <p id="timestamp" style="padding: 10px; font-style: italic; color: #444;"></p>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
