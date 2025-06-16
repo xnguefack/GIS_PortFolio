@@ -168,11 +168,26 @@ function loadAirQuality(lat, lon, cityName = 'Selected Location') { // Step 25.B
                         responsive: true,
                         plugins: { legend: { display: true } },
                         scales: {
-                            y: { beginAtZero: true },
-                            x: { ticks: { maxRotation: 0 } }
+                            y: { beginAtZero: true,
+                                ticks: {
+                                    color: 'black' // ← Y-axis tick color
+                                },
+                                title:{
+                                    color: 'black' // ← Y-axis label color
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: 'black', // ← X-axis tick color
+                                    autoSkip: true, // Skip some labels for better readability
+                                    maxRotation: 0, // Prevent label rotation
+                                },
+                                title: {
+                                    color: 'black' // ← X-axis label color
+                                }
                         }
                     }
-                });
+                }})
             }
 
             // Clear existing canvas (if already used)
