@@ -122,6 +122,60 @@ function loadAirQuality(lat, lon, cityName = 'Selected Location') { // Step 25.B
                 CO: ${co}
             `;
 
+            // Prepare radar chart data
+            const pm10_raw = data.hourly.pm10[0] || 0;
+            const pm25_raw = data.hourly.pm2_5[0] || 0;
+            const co_raw = data.hourly.carbon_monoxide[0] || 0;
+
+            const radarLabels = ['PM10', 'PM2.5', 'CO'];
+            const radarValues = [
+                Math.min(pm10_raw / 100, 1),
+                Math.min(pm25_raw / 75, 1),
+                Math.min(co_raw / 1000, 1)
+            ];
+
+            // Destroy old radar chart if exists
+            if (Chart.getChart('radarChart')) {
+                Chart.getChart('radarChart').destroy();
+            }
+
+            // Create radar chart
+            new Chart(document.getElementById('radarChart').getContext('2d'), {
+                type: 'radar',
+                data: {
+                    labels: radarLabels,
+                    datasets: [{
+                        label: 'Air Quality Levels',
+                        data: radarValues,
+                        backgroundColor: 'rgba(30, 144, 255, 0.3)',
+                        borderColor: 'rgba(30, 144, 255, 0.8)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'blue'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: '#ccc' },
+                            grid: { color: '#ddd' },
+                            pointLabels: {
+                                color: 'black',
+                                font: { size: 12 }
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                color: 'black'
+                            }
+                        }
+                    }
+                }
+            });
+
+
             if (currentMarker) {
                 currentMarker.remove();
 }

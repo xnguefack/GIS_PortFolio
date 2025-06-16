@@ -24,4 +24,10 @@ to align the three charts side-by-side horizontally, we’ll apply some simple C
     height: 300px !important;
 }
 
+#radarChart {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
 
