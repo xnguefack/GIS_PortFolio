@@ -29,4 +29,13 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 </body>
+
+<!-- Modal container -->
+<div id="chartModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;">
+    <div style="background:white; padding:20px; border-radius:10px; max-width:90vw; max-height:90vh; position:relative;">
+        <span id="closeModal" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">✖</span>
+        <canvas id="modalChart" width="800" height="400"></canvas>
+    </div>
+</div>
+
 </html>

@@ -187,7 +187,68 @@ function loadAirQuality(lat, lon, cityName = 'Selected Location') { // Step 25.B
                                 }
                         }
                     }
-                }})
+                }});
+                document.getElementById(canvasId).onclick = () => {
+                    const modal = document.getElementById('chartModal');
+                    const modalCanvas = document.getElementById('modalChart');
+                    const closeBtn = document.getElementById('closeModal');
+
+                    // Destroy previous chart if any
+                    if (Chart.getChart(modalCanvas)) {
+                        Chart.getChart(modalCanvas).destroy();
+                    }
+
+                    // Show modal
+                    modal.style.display = 'flex';
+
+                    // Create enlarged chart
+                    new Chart(modalCanvas.getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: label,
+                                data: dataset,
+                                borderColor: color,
+                                backgroundColor: 'rgba(0,0,0,0)',
+                                tension: 0.3,
+                                pointRadius: 4,
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { display: true }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: { color: 'black' },
+                                    title: {
+                                        display: true,
+                                        text: 'μg/m³',
+                                        color: 'black'
+                                    }
+                                },
+                                x: {
+                                    ticks: { color: 'black' },
+                                    title: {
+                                        display: true,
+                                        text: 'Hour',
+                                        color: 'black'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Close on click
+                    closeBtn.onclick = () => modal.style.display = 'none';
+                    modal.onclick = (e) => {
+                        if (e.target === modal) modal.style.display = 'none';
+                    };
+                };
             }
 
             // Clear existing canvas (if already used)
